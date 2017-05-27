@@ -35,13 +35,19 @@ class AppRegistryController < ApplicationApiController
   end
 
   def find_by_app_id
-    render json: registry[params[:app_id]]
+    if registry.has_key?(params[:app_id])
+      render json: registry[params[:app_id]]
+    else
+      render json: {}
+    end
   end
 
   def find_by_instance_id
-    result = {}
-    result = registry[params[:app_id]][params[:instance_id]] if registry.has_key?(params[:app_id]) and registry[params[:app_id]].has_key?(params[:instance_id])
-    render json: result
+    if registry.has_key?(params[:app_id]) and registry[params[:app_id]].has_key?(params[:instance_id])
+      render json: registry[params[:app_id]][params[:instance_id]]
+    else
+      render json: {}
+    end
   end
 
   private
