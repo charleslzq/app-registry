@@ -7,6 +7,7 @@ class AppRegistryController < ApplicationApiController
     init_if_necessary app_id
     info = InstanceInfo.new
     info.assign_attributes instance_params(params)
+    info.last_heart_beat = Time.now
     registry[app_id][info.instance_id] = info
 
     render json: {
